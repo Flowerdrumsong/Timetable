@@ -1,23 +1,28 @@
 document.addEventListener("DOMContentLoaded", function(){
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.beginPath();
+  ctx.moveTo(150,150);
+  ctx.arc(150, 150, 150, 0, 360, false);
+  ctx.fillStyle = "rgba(0, 0, 0, .2)";
+  ctx.fill();
+  
   const add_btn=document.getElementById('add_btn');
   
   add_btn.addEventListener('click',function(){
     const start_time=document.getElementById('start_time').value;
     const end_time=document.getElementById('end_time').value;
     const todo=document.getElementById('todo').value;
-    console.log(start_time);
-    console.log(end_time);
-    console.log(todo);
     convert(start_time, end_time, todo);
-    
   })
 
   function convert(start_time, end_time){
-    const start_time_h=start_time.substr(0,2);
-    const start_time_m=start_time.substr(3,2);
-    const end_time_h=end_time.substr(0,2);
-    const end_time_m=end_time.substr(3,2);
-
+    let start_time_h=start_time.substr(0,2);
+    let start_time_m=start_time.substr(3,2);
+    let end_time_h=end_time.substr(0,2);
+    let end_time_m=end_time.substr(3,2);
+    console.log(start_time_h);
+    console.log(end_time_h);
     if(end_time_h<start_time_h){
       alert('Reset the time')
     }else{
@@ -32,16 +37,29 @@ document.addEventListener("DOMContentLoaded", function(){
 
         draw(start_degrees, end_degrees);
         write(start_degrees, end_degrees,todo.value);
-      }else{
-        console.log('고민중임...');
+      }else if(start_time_h<=5){
+        start_time_h=parseInt(start_time.substr(1,1));
+        start_time_m=start_time.substr(3,2);
+        end_time_h=parseInt(end_time.substr(1,1));
+        end_time_m=end_time.substr(3,2);
+
+        var angle1=(start_time_h+19)*15;
+        var angle2=start_time_m*0.25;
+        var start_degrees=angle1+angle2;
+
+        var angle3=(end_time_h+19)*15;
+        var angle4=end_time_m*0.25;
+        var end_degrees=angle3+angle4;
+
+        draw(start_degrees, end_degrees);
+        write(start_degrees, end_degrees,todo.value);
       }
     }
   }
 
-  var canvas = document.getElementById('canvas');
+  
   function draw(start_degrees, end_degrees){
     if(canvas.getContext){
-      const ctx = canvas.getContext('2d');
       //각도를 degree가 아닌 radian으로 사용하기 때문에 계산 필요
       //라디안: 반지름에 대한 호의 길이의 비
       const start_angle=(Math.PI/180)*start_degrees;
@@ -49,10 +67,8 @@ document.addEventListener("DOMContentLoaded", function(){
       ctx.beginPath();
       ctx.moveTo(150,150);
       ctx.arc(150, 150, 150, start_angle, end_angle, false);
-      ctx.fillStyle = "rgba(255, 165, 0, 1)";
+      ctx.fillStyle = "rgba(255, 165, 0, .5)";
       ctx.fill();
-      ctx.strokeStyle = "rgba(255, 165, 0, 1)";
-      ctx.stroke();
     }else{
       //canvas-unsupported code here
     
@@ -68,8 +84,12 @@ document.addEventListener("DOMContentLoaded", function(){
       //x,y좌표값 계산해서 넣기
       ctx.fillText(todo, 10, 10);
       //x,y좌표값 계산해서 넣기
-      const list=document.getElementById('list');
-      list.innerHTML+='<li>'+todo+'<button>X</button></li>';
+      listing(todo);
     }
   }
+  function listing(todo){
+    const list=document.getElementById('list');
+    list.innerHTML+='<li><span>'+todo+'</span><button class="delete_btn">X</button></li>';
+  }
+
 });
