@@ -1,30 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+/* FONT */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(/src/bg.jpeg);
+}
 
 .inner {
-  width: 300px;
-  height: 100%;
-  background-color: #ccc;
+  font-family: 'Roboto', sans-serif;
+  margin: 0 auto;
+  padding: 10px;
+  width: 320px;
+  height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgb(215, 177, 78);
+}
+
+#title::before {
+  content: "< ";
+  color: rgb(215, 177, 78);
+  font-size: 28px;
 }
 
 #title {
-  font-family: 'Kdam Thmor Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+#time-set,
+#time-desc {
+  padding: 10px;
+}
+
+#canvas {
+  margin: 10px;
 }
 
 #list {
+  height: 130px;
   padding: 0;
   position: relative;
+  overflow: auto;
 }
 
 #list li {
   padding-left: 10px;
   list-style: none;
+  padding-bottom: 4px;
 }
 
 #list li span {
   width: 70%;
-  display: inline-block;
+  display: block;
+  float: left;
 }
 
-#list li button {
-  margin-left: 10px;
+#list li .delete_btn {
+  display: block;
+  float: right;
+  border: none;
+  color: #000;
+}
+
+#list li .delete_btn:hover {
+  cursor: pointer;
 }
